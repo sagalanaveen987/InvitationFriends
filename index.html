@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Naveen Weds Naga Devi | Wedding Invitation</title>
+
+  <meta property="og:title" content="Naveen Weds Naga Devi | Wedding Invitation" />
+  <meta property="og:description" content="We request the honor of your presence to celebrate our wedding festivities!" />
+  <meta property="og:image" content="main-invitation.png" />
+  <meta property="og:type" content="website" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+    body, html {
+      width: 100%; height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #1a0202; color: #4a0000; overflow-x: hidden;
+    }
+
+    /* MUSIC BUTTON */
+    .music-btn {
+      position: fixed; top: 15px; right: 15px; z-index: 9999;
+      background: rgba(74, 0, 0, 0.85); color: #ffd700; border: 1px solid #ffd700;
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      font-size: 18px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.2s ease, opacity 0.5s ease;
+      opacity: 0; pointer-events: none;
+    }
+    .music-btn.visible { opacity: 1; pointer-events: auto; }
+    .music-btn:active { transform: scale(0.9); }
+
+    /* DOORS & SEAL */
+    .door-wrapper {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000;
+      display: flex; justify-content: center; align-items: center; overflow: hidden;
+    }
+    .door {
+      position: absolute; top: 0; width: 50%; height: 100%;
+      background: linear-gradient(135deg, #4a0000, #2b0000); z-index: 2;
+      transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+    }
+    .door-left { left: 0; border-right: 2px solid #ffd700; }
+    .door-right { right: 0; border-left: 2px solid #ffd700; }
+    .door-left::before, .door-right::before {
+      content: ''; position: absolute; top: 4%; bottom: 4%; left: 8%; right: 8%;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+    }
+    .door-wrapper.open .door-left { transform: translateX(-100%); }
+    .door-wrapper.open .door-right { transform: translateX(100%); }
+
+    .wax-seal-container {
+      position: absolute; z-index: 10; display: flex; flex-direction: column;
+      align-items: center; cursor: pointer; transition: opacity 0.8s ease;
+    }
+    .wax-seal {
+      width: 140px; height: 140px;
+      background: radial-gradient(circle at 30% 30%, #ff1a1a, #800000);
+      border: 4px solid #ffd700; border-radius: 50%;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(0,0,0,0.5);
+      display: flex; justify-content: center; align-items: center;
+      animation: pulse 2.5s infinite; white-space: nowrap;
+    }
+    .monogram {
+      font-family: 'Cinzel', serif; font-size: 44px; font-weight: 700; color: #ffd700;
+      text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.9);
+      display: flex; align-items: center; justify-content: center;
+      letter-spacing: 2px; line-height: 1; text-transform: uppercase;
+    }
+    .monogram-amp { font-family: 'Great Vibes', cursive; font-size: 30px; color: #fff2a3; margin: 0 6px; opacity: 0.95; }
+    .tap-text {
+      margin-top: 15px; font-family: 'Cinzel', serif; color: #ffd700; font-size: 13px;
+      letter-spacing: 2px; text-transform: uppercase; font-weight: bold;
+      background: rgba(0, 0, 0, 0.7); padding: 6px 18px; border-radius: 20px; border: 1px solid #ffd700;
+    }
+    .door-wrapper.open .wax-seal-container { opacity: 0; pointer-events: none; }
+    .door-wrapper.hidden { display: none; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+    }
+
+    /* MAIN CONTAINER */
+    .main-content {
+      width: 100%; max-width: 500px; margin: 0 auto; background-color: #fdf8f0;
+      min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      padding: 20px 15px 40px 15px; text-align: center;
+    }
+    .invitation-card-section img {
+      width: 100%; border-radius: 8px; border: 3px solid #ffd700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15); margin-bottom: 25px;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif; font-size: 20px; color: #800000; margin: 10px 0 15px 0;
+      text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #ffd700;
+      display: inline-block; padding-bottom: 5px;
+    }
+
+    /* COUNTDOWN */
+    .countdown-box {
+      background: linear-gradient(135deg, #4a0000, #800000); color: #ffd700;
+      padding: 20px 10px; border-radius: 12px; border: 2px solid #ffd700; margin-bottom: 20px;
+    }
+    .timer { display: flex; justify-content: space-around; }
+    .time-unit { display: flex; flex-direction: column; align-items: center; }
+    .time-unit span:first-child { font-family: 'Cinzel', serif; font-size: 24px; font-weight: bold; }
+    .time-unit span:last-child { font-size: 10px; text-transform: uppercase; color: #fff; margin-top: 2px; }
+
+    .scroll-down-indicator {
+      display: flex; flex-direction: column; align-items: center;
+      margin: 10px 0 30px 0; cursor: pointer; text-decoration: none; color: #800000;
+    }
+    .scroll-down-text {
+      font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 6px; animation: fadeInOut 2s infinite ease-in-out;
+    }
+    .scroll-down-chevron {
+      width: 28px; height: 28px; border-radius: 50%; background: #800000; color: #ffd700;
+      display: flex; align-items: center; justify-content: center; border: 1px solid #ffd700;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); animation: bounce 1.8s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(8px); }
+      60% { transform: translateY(4px); }
+    }
+    @keyframes fadeInOut { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    /* EVENT CARDS */
+    .event-card {
+      background: #ffffff; border-radius: 10px; padding: 15px; margin-bottom: 25px;
+      text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 1px solid #f0e6d2;
+    }
+    .event-header { font-family: 'Cinzel', serif; font-size: 18px; color: #800000; font-weight: bold; margin-bottom: 6px; }
+    .event-details { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 15px; }
+    .interactive-stage {
+      position: relative; width: 100%; height: 520px; border-radius: 8px; overflow: hidden;
+      margin-bottom: 12px; border: 2px solid #ffd700; background: #fff8eb;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .card-reveal-img { width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; }
+
+    /* RECEPTION CURTAINS */
+    .curtain-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;
+      overflow: hidden; cursor: grab; touch-action: pan-y;
+      user-select: none; -webkit-user-select: none; transition: opacity 0.8s ease;
+    }
+    .curtain-overlay:active { cursor: grabbing; }
+    .curtain-panel {
+      position: absolute; top: 0; width: 50.5%; height: 100%; will-change: transform;
+      background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.38) 0px, rgba(0,0,0,0.0) 14px, rgba(255,255,255,0.08) 22px, rgba(0,0,0,0.38) 36px),
+        linear-gradient(180deg, #8a0a22 0%, #5c0014 100%);
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+    }
+    .curtain-left  { left: 0;  border-right: 3px solid #ffd700; }
+    .curtain-right { right: 0; border-left: 3px solid #ffd700; }
+    .curtain-rod {
+      position: absolute; top: 0; left: 0; width: 100%; height: 14px;
+      background: linear-gradient(180deg, #fff2a3, #c58f08 60%, #5a3d00);
+      z-index: 3; box-shadow: 0 3px 8px rgba(0,0,0,0.6); pointer-events: none;
+    }
+    .curtain-hint {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4;
+      display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.78);
+      color: #ffd700; border: 1px solid #ffd700; padding: 10px 18px; border-radius: 24px;
+      font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      white-space: nowrap; pointer-events: none; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+    .curtain-hint .arrow-l { animation: nudgeL 1.2s ease-in-out infinite; }
+    .curtain-hint .arrow-r { animation: nudgeR 1.2s ease-in-out infinite; }
+    @keyframes nudgeL { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-6px); } }
+    @keyframes nudgeR { 0%,100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+
+    /* WEDDING FLUTE & TABLA */
+    .melody-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at center, #3a0008 0%, #120001 100%);
+      z-index: 10; display: flex; flex-direction: column; justify-content: center;
+      align-items: center; transition: opacity 0.8s ease; cursor: pointer;
+    }
+    .melody-art { width: 290px; height: 230px; filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.35)); }
+    .melody-art svg { width: 100%; height: 100%; overflow: visible; }
+    .tabla-group, .flute-group { transform-box: fill-box; transform-origin: center; }
+    .melody-art.beat .tabla-group { animation: tablaHit 0.18s ease-out; }
+    .melody-art.beat .flute-group { animation: fluteSway 0.35s ease-out; }
+    .melody-art.beat { filter: drop-shadow(0 0 28px rgba(255, 215, 0, 0.8)); }
+    @keyframes tablaHit { 0% { transform: scale(1); } 40% { transform: scale(1.07) rotate(-1.5deg); } 100% { transform: scale(1); } }
+    @keyframes fluteSway { 0% { transform: rotate(0deg); } 40% { transform: rotate(-4deg) translateY(-3px); } 100% { transform: rotate(0deg); } }
+    .music-note { opacity: 0; fill: #ffd700; font-size: 22px; font-family: serif; }
+    .melody-art.beat .music-note { animation: noteFloat 1s ease-out forwards; }
+    .melody-art.beat .music-note.n2 { animation-delay: 0.12s; }
+    .melody-art.beat .music-note.n3 { animation-delay: 0.24s; }
+    @keyframes noteFloat {
+      0% { opacity: 0; transform: translateY(10px); }
+      25% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-35px); }
+    }
+    .melody-instruction {
+      color: #ffffff; font-family: 'Cinzel', serif; font-size: 13px; margin-top: 12px;
+      text-transform: uppercase; letter-spacing: 1px; text-align: center;
+    }
+    .melody-badge {
+      margin-top: 16px; background: rgba(0, 0, 0, 0.85); color: #ffd700; border: 1px solid #ffd700;
+      padding: 8px 20px; border-radius: 20px; font-size: 12px; font-weight: bold;
+      letter-spacing: 1px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .map-btn {
+      display: block; text-align: center; background: #800000; color: #ffd700;
+      text-decoration: none; padding: 10px; border-radius: 20px; font-size: 12px;
+      font-weight: bold; letter-spacing: 0.5px;
+    }
+
+    /* THANK YOU */
+    .thankyou-section {
+      margin-top: 40px; padding: 30px 15px; background: linear-gradient(135deg, #4a0000, #2b0000);
+      color: #ffd700; border-radius: 12px; border: 2px solid #ffd700; position: relative;
+    }
+    .thankyou-title { font-family: 'Great Vibes', cursive; font-size: 45px; margin-bottom: 8px; }
+    .thankyou-text { font-size: 13px; color: #fdf5e6; line-height: 1.6; font-style: italic; }
+    .hashtag {
+      font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 1.5px; margin-top: 15px;
+      color: #ffd700; font-weight: bold; background: rgba(0, 0, 0, 0.4); padding: 8px;
+      border-radius: 20px; display: inline-block;
+    }
+
+    /* GOLDEN FALL */
+    .gold-fall {
+      position: fixed; top: -40px; pointer-events: none; z-index: 10003; opacity: 0;
+      animation: goldFall var(--dur, 7s) linear forwards; animation-delay: var(--delay, 0s);
+    }
+    @keyframes goldFall {
+      0%   { transform: translateY(0); opacity: 0; }
+      8%   { opacity: var(--alpha, 1); }
+      85%  { opacity: var(--alpha, 1); }
+      100% { transform: translateY(108vh); opacity: 0; }
+    }
+    .gold-fall .inner {
+      display: block; width: var(--size, 14px); height: var(--size, 14px);
+      animation: goldSway var(--sway, 3s) ease-in-out infinite alternate;
+    }
+    @keyframes goldSway {
+      from { transform: translateX(calc(var(--drift, 30px) * -1)) rotate(-25deg); }
+      to   { transform: translateX(var(--drift, 30px)) rotate(25deg); }
+    }
+    .gold-fall.star { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.95)); }
+    .gold-fall.star .inner {
+      background: linear-gradient(135deg, #fff9c4, #ffd700 55%, #c58f08);
+      clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+      animation: goldSway var(--sway, 3s) ease-in-out infinite alternate, twinkle 1.1s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { scale: 0.55; } to { scale: 1.15; } }
+    .gold-fall.bloom { filter: drop-shadow(0 2px 3px rgba(120, 50, 0, 0.45)); }
+    .gold-fall.bloom .inner {
+      border-radius: 50%;
+      background: radial-gradient(circle, #8a3a00 0 16%, transparent 17%), repeating-conic-gradient(#ff9800 0 14deg, #ffc107 14deg 28deg);
+      animation: goldSway var(--sway, 3s) ease-in-out infinite alternate, bloomFlip 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes bloomFlip { from { rotate: x 0deg; } to { rotate: x 70deg; } }
+    .gold-fall.dust .inner {
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffbe0 0%, #ffd700 45%, rgba(255, 215, 0, 0) 72%);
+    }
+    @media (prefers-reduced-motion: reduce) { .gold-fall { display: none; } }
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="RadheShyam.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-btn" id="musicToggleBtn" onclick="toggleAudio()">🔊</button>
+
+  <!-- DOORS & WAX SEAL -->
+  <div class="door-wrapper" id="doorWrapper">
+    <div class="door door-left"></div>
+    <div class="door door-right"></div>
+    <div class="wax-seal-container" id="sealBtn">
+      <div class="wax-seal">
+        <span class="monogram"><span class="letter">N</span><span class="monogram-amp">&amp;</span><span class="letter">D</span></span>
+      </div>
+      <div class="tap-text">Tap to Open</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <div class="invitation-card-section">
+      <img src="main-invitation.png" alt="Wedding Invitation Card">
+    </div>
+
+    <h2 class="section-title">Counting Down to the Muhurtham</h2>
+    <div class="countdown-box">
+      <div class="timer">
+        <div class="time-unit"><span id="days">00</span><span>Days</span></div>
+        <div class="time-unit"><span id="hours">00</span><span>Hours</span></div>
+        <div class="time-unit"><span id="minutes">00</span><span>Mins</span></div>
+        <div class="time-unit"><span id="seconds">00</span><span>Secs</span></div>
+      </div>
+    </div>
+
+    <a href="#festivities-section" class="scroll-down-indicator" aria-label="Scroll to festivities">
+      <span class="scroll-down-text">Scroll Down</span>
+      <div class="scroll-down-chevron">▼</div>
+    </a>
+
+    <h2 class="section-title" id="festivities-section">Wedding Festivities</h2>
+
+    <!-- RECEPTION -->
+    <div class="event-card">
+      <div class="event-header">✨ Reception</div>
+      <div class="event-details">
+        <strong>Date &amp; Time:</strong> November 24, 2026 | 7:30 PM onwards<br>
+        <strong>Venue:</strong> Sri Vasavi Arya Vysya Nithya Annadana Sathram, Gandi, Andhra Pradesh 516329
+      </div>
+
+      <div class="interactive-stage" id="receptionStage">
+        <img src="reception-card.png" alt="Reception Card" class="card-reveal-img">
+
+        <div class="curtain-overlay" id="curtainOverlay">
+          <div class="curtain-panel curtain-left" id="curtainLeft"></div>
+          <div class="curtain-panel curtain-right" id="curtainRight"></div>
+          <div class="curtain-rod"></div>
+          <div class="curtain-hint" id="curtainHint">
+            <span class="arrow-l">&#9664;</span>
+            <span>Swipe to open</span>
+            <span class="arrow-r">&#9654;</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://maps.app.goo.gl/FcqS72fEXn3yt72j7?g_st=ac" target="_blank" class="map-btn">📍 View Location on Map</a>
+    </div>
+
+    <!-- WEDDING -->
+    <div class="event-card">
+      <div class="event-header">💍 Wedding</div>
+      <div class="event-details">
+        <strong>Date &amp; Time:</strong> November 25, 2026 | 8:30 AM <br>
+        <strong>Venue:</strong> Sri Vasavi Arya Vysya Nithya Annadana Sathram, Gandi, Andhra Pradesh 516329
+      </div>
+
+      <div class="interactive-stage" id="weddingStage">
+        <img src="wedding-card.png" alt="Wedding Card" class="card-reveal-img">
+
+        <div class="melody-overlay" id="melodyOverlay">
+          <div class="melody-art" id="melodyArt">
+            <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bambooGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f3d27a"/>
+                  <stop offset="50%" stop-color="#c9902f"/>
+                  <stop offset="100%" stop-color="#7a4a10"/>
+                </linearGradient>
+                <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#6b2a0a"/>
+                  <stop offset="40%" stop-color="#e08a3c"/>
+                  <stop offset="100%" stop-color="#5a2208"/>
+                </linearGradient>
+                <linearGradient id="woodGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4a1a05"/>
+                  <stop offset="45%" stop-color="#b8541a"/>
+                  <stop offset="100%" stop-color="#3a1204"/>
+                </linearGradient>
+                <radialGradient id="skinGrad" cx="50%" cy="40%" r="60%">
+                  <stop offset="0%" stop-color="#fffdf2"/>
+                  <stop offset="100%" stop-color="#e3cf94"/>
+                </radialGradient>
+              </defs>
+
+              <!-- FLUTE -->
+              <g class="flute-group">
+                <g transform="rotate(-8 130 38)">
+                  <rect x="25" y="30" width="215" height="15" rx="7.5" fill="url(#bambooGrad)" stroke="#fff2a3" stroke-width="1.5"/>
+                  <rect x="50" y="30" width="6" height="15" fill="#ffd700"/>
+                  <rect x="120" y="30" width="6" height="15" fill="#ffd700"/>
+                  <rect x="215" y="30" width="6" height="15" fill="#ffd700"/>
+                  <ellipse cx="78" cy="37.5" rx="4" ry="3" fill="#2b0d00"/>
+                  <circle cx="140" cy="37.5" r="3.2" fill="#2b0d00"/>
+                  <circle cx="156" cy="37.5" r="3.2" fill="#2b0d00"/>
+                  <circle cx="172" cy="37.5" r="3.2" fill="#2b0d00"/>
+                  <circle cx="188" cy="37.5" r="3.2" fill="#2b0d00"/>
+                  <circle cx="204" cy="37.5" r="3.2" fill="#2b0d00"/>
+                  <path d="M 25,37 Q 12,42 8,58" stroke="#00bcd4" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </g>
+              </g>
+
+              <text class="music-note n1" x="60" y="25">♪</text>
+              <text class="music-note n2" x="130" y="12">♫</text>
+              <text class="music-note n3" x="215" y="22">♪</text>
+
+              <!-- TABLA -->
+              <g class="tabla-group">
+                <path d="M 32,125 Q 36,190 82,194 Q 128,190 132,125 Z" fill="url(#copperGrad)" stroke="#ffd700" stroke-width="2"/>
+                <ellipse cx="82" cy="125" rx="52" ry="15" fill="url(#skinGrad)" stroke="#ffd700" stroke-width="2.5"/>
+                <ellipse cx="92" cy="125" rx="20" ry="7" fill="#111" stroke="#555" stroke-width="1.5"/>
+                <path d="M 40,138 L 52,185 L 64,140 L 76,190 L 88,140 L 100,190 L 112,140 L 122,185"
+                      fill="none" stroke="#ffd700" stroke-width="1.8" stroke-linejoin="round"/>
+
+                <path d="M 152,108 L 160,178 Q 188,188 216,178 L 224,108 Z" fill="url(#woodGrad)" stroke="#ffd700" stroke-width="2"/>
+                <ellipse cx="188" cy="108" rx="38" ry="12" fill="url(#skinGrad)" stroke="#ffd700" stroke-width="2.5"/>
+                <ellipse cx="188" cy="108" rx="21" ry="7" fill="#111" stroke="#555" stroke-width="1.5"/>
+                <path d="M 158,120 L 166,172 L 174,122 L 182,176 L 190,122 L 198,176 L 206,122 L 214,172 L 220,120"
+                      fill="none" stroke="#ffd700" stroke-width="1.8" stroke-linejoin="round"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="melody-instruction">🎶 Tap for Flute &amp; Tabla 🎶</div>
+          <div class="melody-badge" id="melodyBadge">0 / 5 Beats</div>
+        </div>
+      </div>
+
+      <a href="https://maps.app.goo.gl/FcqS72fEXn3yt72j7?g_st=ac" target="_blank" class="map-btn">📍 View Location on Map</a>
+    </div>
+
+    <div class="thankyou-section">
+      <div class="thankyou-title">Thank You</div>
+      <p class="thankyou-text">"Your presence and blessings will make our special celebration truly complete."</p>
+      <div class="hashtag">Naveen &amp; Naga Devi</div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ---------------- 0. AUDIO ---------------- */
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    let isPlaying = false;
+
+    function playAudio() {
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        musicBtn.innerText = '🔊';
+      }).catch(err => console.log('Audio play deferred:', err));
+    }
+
+    function toggleAudio() {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.innerText = '🔇';
+        isPlaying = false;
+      } else {
+        bgMusic.play().catch(() => {});
+        musicBtn.innerText = '🔊';
+        isPlaying = true;
+      }
+    }
+
+    /* ---------------- 1. GOLDEN FALL ---------------- */
+    function triggerGoldenFall(durationMs) {
+      const rand = (a, b) => a + Math.random() * (b - a);
+
+      function spawn() {
+        const roll = Math.random();
+        const type = roll < 0.45 ? 'star' : roll < 0.70 ? 'bloom' : 'dust';
+        const el = document.createElement('div');
+        el.className = 'gold-fall ' + type;
+
+        const depth = Math.random();
+        let size;
+        if (type === 'star')       size = 8 + depth * 14;
+        else if (type === 'bloom') size = 14 + depth * 14;
+        else                       size = 5 + depth * 9;
+
+        const dur = 9 - depth * 3.5 + Math.random();
+        el.style.left = rand(-2, 100) + 'vw';
+        el.style.setProperty('--size', size + 'px');
+        el.style.setProperty('--dur', dur + 's');
+        el.style.setProperty('--sway', rand(2, 4.5) + 's');
+        el.style.setProperty('--drift', rand(14, 44) + 'px');
+        el.style.setProperty('--alpha', (0.55 + depth * 0.45).toFixed(2));
+        el.style.setProperty('--delay', '0s');
+
+        const inner = document.createElement('span');
+        inner.className = 'inner';
+        el.appendChild(inner);
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), (dur + 0.3) * 1000);
+      }
+
+      const interval = setInterval(spawn, 110);
+      setTimeout(() => clearInterval(interval), durationMs);
+    }
+
+    /* ---------------- 2. DOOR OPEN ---------------- */
+    const doorWrapper = document.getElementById('doorWrapper');
+    document.getElementById('sealBtn').addEventListener('click', () => {
+      doorWrapper.classList.add('open');
+      playAudio();
+      musicBtn.classList.add('visible');
+      triggerGoldenFall(7000);
+      setTimeout(() => doorWrapper.classList.add('hidden'), 1800);
+    });
+
+    /* ---------------- 3. COUNTDOWN ---------------- */
+    const weddingDate = new Date(2026, 10, 25, 8, 50, 0).getTime();
+    function updateCountdown() {
+      const diff = weddingDate - Date.now();
+      if (diff > 0) {
+        document.getElementById('days').innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
+        document.getElementById('hours').innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+        document.getElementById('minutes').innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+        document.getElementById('seconds').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    /* ---------------- 4. RECEPTION: SWIPE-TO-OPEN CURTAINS ---------------- */
+    const curtainOverlay = document.getElementById('curtainOverlay');
+    const curtainLeft = document.getElementById('curtainLeft');
+    const curtainRight = document.getElementById('curtainRight');
+    const curtainHint = document.getElementById('curtainHint');
+
+    let curtainDragging = false;
+    let curtainStartX = 0;
+    let curtainProgress = 0;
+    let curtainOpened = false;
+
+    function setCurtain(p, animate) {
+      const t = animate ? 'transform 0.7s cubic-bezier(0.22, 0.8, 0.3, 1)' : 'none';
+      curtainLeft.style.transition = t;
+      curtainRight.style.transition = t;
+      curtainLeft.style.transform = 'translateX(' + (-p * 100) + '%)';
+      curtainRight.style.transform = 'translateX(' + (p * 100) + '%)';
+      curtainHint.style.opacity = Math.max(0, 1 - p * 3);
+    }
+
+    function openCurtains() {
+      curtainOpened = true;
+      setCurtain(1, true);
+      triggerGoldenFall(2500);
+      setTimeout(() => {
+        curtainOverlay.style.opacity = '0';
+        setTimeout(() => { curtainOverlay.style.display = 'none'; }, 800);
+      }, 600);
+    }
+
+    curtainOverlay.addEventListener('pointerdown', (e) => {
+      if (curtainOpened) return;
+      curtainDragging = true;
+      curtainProgress = 0;
+      curtainStartX = e.clientX;
+      try { curtainOverlay.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+
+    curtainOverlay.addEventListener('pointermove', (e) => {
+      if (!curtainDragging || curtainOpened) return;
+      const half = curtainOverlay.offsetWidth / 2;
+      curtainProgress = Math.min(1, Math.abs(e.clientX - curtainStartX) / half);
+      setCurtain(curtainProgress, false);
+    });
+
+    function releaseCurtain() {
+      if (!curtainDragging || curtainOpened) return;
+      curtainDragging = false;
+      if (curtainProgress > 0.3) {
+        openCurtains();
+      } else {
+        curtainProgress = 0;
+        setCurtain(0, true);
+      }
+    }
+    curtainOverlay.addEventListener('pointerup', releaseCurtain);
+    curtainOverlay.addEventListener('pointercancel', releaseCurtain);
+
+    /* ---------------- 5. WEDDING: FLUTE & TABLA (5 TAPS) ---------------- */
+    let melodyTaps = 0;
+    let audioCtx = null;
+    const fluteNotes = [523.25, 587.33, 659.25, 783.99, 880.00];
+
+    function playTabla() {
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, t);
+      osc.frequency.exponentialRampToValueAtTime(90, t + 0.15);
+      gain.gain.setValueAtTime(0.7, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + 0.5);
+    }
+
+    function playFlute(freq) {
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const vibrato = audioCtx.createOscillator();
+      const vibratoGain = audioCtx.createGain();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      vibrato.frequency.value = 5.5;
+      vibratoGain.gain.value = 4;
+      vibrato.connect(vibratoGain).connect(osc.frequency);
+
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.linearRampToValueAtTime(0.35, t + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 1.1);
+
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t); vibrato.start(t);
+      osc.stop(t + 1.2); vibrato.stop(t + 1.2);
+    }
+
+    function tapMelodyBeat() {
+      if (melodyTaps >= 5) return;
+
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        playTabla();
+        playFlute(fluteNotes[melodyTaps]);
+      } catch (e) { console.log('Audio unavailable:', e); }
+
+      melodyTaps++;
+      document.getElementById('melodyBadge').innerText = melodyTaps + ' / 5 Beats';
+
+      const art = document.getElementById('melodyArt');
+      art.classList.remove('beat');
+      void art.offsetWidth;
+      art.classList.add('beat');
+
+      if (melodyTaps >= 5) {
+        triggerGoldenFall(2000);
+        const overlay = document.getElementById('melodyOverlay');
+        setTimeout(() => {
+          overlay.style.opacity = '0';
+          setTimeout(() => { overlay.style.display = 'none'; }, 800);
+        }, 600);
+      }
+    }
+    document.getElementById('melodyOverlay').addEventListener('click', tapMelodyBeat);
+  </script>
+</body>
+</html>
